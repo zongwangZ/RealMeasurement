@@ -15,12 +15,17 @@ back to back probing
 """
 import socket
 import time
+import sys
 from threading import Timer
 class B2BProbing:
     def __init__(self, addr1:tuple, addr2:tuple, addr3:tuple, nums:int=1000, probe_interval:int=10, packet_interval:int=0):
         self.addr1 = addr1
         self.addr2 = addr2
         self.addr3 = addr3
+        print("目的地址1为：",str(addr1))
+        print("目的地址2为：",str(addr2))
+        print("目的地址3为：",str(addr3))
+        print("发包数量为：",str(nums))
         self.nums = nums
         self.probe_interval = probe_interval  # 单位为ms
         self.packet_interval = packet_interval  # 单位ms
@@ -67,7 +72,8 @@ if __name__ == '__main__':
     # addr1 = ("127.0.0.1",10002)
     # addr2 = ("127.0.0.1",10003)
     # addr3 = ("127.0.0.1",10004)
-    nums = 500000
+
+    nums = int(sys.argv[1])
     probing = B2BProbing(addr1,addr2,addr3,nums)
     probing.probing()
     probing.close()
