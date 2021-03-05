@@ -33,9 +33,9 @@ class B2BProbing:
         self.s3 = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 
     def send_probe(self, id):
-        payload1 = "s1:" + str(id) + ":" + str(time.time())
-        payload2 = "s2:" + str(id) + ":" + str(time.time())
-        payload3 = "s3:" + str(id) + ":" + str(time.time())
+        payload1 = "s1:" + str(id)
+        payload2 = "s2:" + str(id)
+        payload3 = "s3:" + str(id)
         self.s1.sendto(payload1.encode("utf-8"), self.addr1)
         self.s2.sendto(payload2.encode("utf-8"), self.addr2)
         self.s3.sendto(payload3.encode("utf-8"), self.addr3)
@@ -60,14 +60,14 @@ class B2BProbing:
 
 
 if __name__ == '__main__':
-    # addr1 = ("1.15.81.154",10002)
-    # addr2 = ("82.156.15.153",10002)
-    # addr3 = ("120.24.37.43",10002)
+    addr1 = ("1.15.81.154",10002)
+    addr2 = ("82.156.15.153",10003)
+    addr3 = ("120.24.37.43",10004)
 
-    addr1 = ("127.0.0.1",10002)
-    addr2 = ("127.0.0.1",10003)
-    addr3 = ("127.0.0.1",10004)
-    nums = 1
+    # addr1 = ("127.0.0.1",10002)
+    # addr2 = ("127.0.0.1",10003)
+    # addr3 = ("127.0.0.1",10004)
+    nums = 500000
     probing = B2BProbing(addr1,addr2,addr3,nums)
     probing.probing()
     probing.close()
