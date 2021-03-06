@@ -37,7 +37,7 @@ class Sniff:
         self.file.write(record)
 
     def sniff_scapy(self):
-        self.t = AsyncSniffer(iface=self.iface, filter=self.filter,prn=self.record,count=self.count+1)
+        self.t = AsyncSniffer(iface=self.iface, filter=self.filter,prn=self.record,count=self.count+1,timeout=7200)
         self.t.start()
         self.t.join()
         self.save_pcap()
