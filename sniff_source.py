@@ -32,12 +32,13 @@ class Sniff:
         filename = "data/packet_record"+self.formatted_time+".txt"
         self.file = open(filename,"a")
 
-    def record(self,p):
-        record = str(p.time)+":"+p.payload.load.decode()+"\n"
-        print(record)
+    # def record(self,p):
+    #     record = str(p.time)+":"+p.payload.load.decode()+"\n"
+    #     print(record)
 
     def sniff_scapy(self):
-        self.pkts = sniff(iface=self.iface, filter=self.filter,prn=self.record,count=self.count+1,timeout=self.timeout)
+        # self.pkts = sniff(iface=self.iface, filter=self.filter,prn=self.record,count=self.count+1,timeout=self.timeout)
+        self.pkts = sniff(iface=self.iface, filter=self.filter,count=self.count+1,timeout=self.timeout)
         self.save_pkts()
         self.close()
 
