@@ -24,8 +24,8 @@ class ProbeServer:
     def run(self):
         while True:
             data, addr = self.s.recvfrom(2048)
-            print("at:",time.time(),"received:", data.decode(), "from", addr)
-            if data.decode() == "end1":
+            # print("at:",time.time(),"received:", data.decode(), "from", addr)
+            if data.decode() == "end":
                 break
         self.s.close()
 
@@ -37,4 +37,4 @@ if __name__ == '__main__':
     print("port："+str(port))
     addr = (ip,port)
     server = ProbeServer(addr)
-    # server.run()
+    server.run()
