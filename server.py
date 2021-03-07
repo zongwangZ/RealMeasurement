@@ -37,4 +37,4 @@ if __name__ == '__main__':
     print("port："+str(port))
     addr = (ip,port)
     server = ProbeServer(addr)
-    server.run()
+    # server.run()
