@@ -1,0 +1,4 @@
+conda activate machine_learning
+cd C:\Users\张宗旺\Documents\GitHub\RealMeasurement
+python sniff_source.py "Intel(R) Dual Band Wireless-AC 8265" "udp dst port 10002" 100000 2400
+python probing.py 100000

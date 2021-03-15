@@ -12,6 +12,7 @@
 """
 back to back probing
 背靠背探测
+负责发包
 """
 import socket
 import time

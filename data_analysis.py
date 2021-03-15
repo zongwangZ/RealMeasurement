@@ -12,7 +12,8 @@
 对产生的测量数据文件分析，画图
 """
 import time as systime
-
+import numpy as np
+from matplotlib import pyplot as plt
 def preprocess(s1_filepath,s2_filepath,s3_filepath,d1_filepath,d2_filepath,d3_filepath,nums):
     """
     处理端到端路径时延
@@ -35,67 +36,80 @@ def preprocess(s1_filepath,s2_filepath,s3_filepath,d1_filepath,d2_filepath,d3_fi
     rst_filepath = "data/rst_path_time"+str(time)+".txt"
     rst_file = open(rst_filepath,"a")
 
-
+    s1_line = s1_file.readline()
+    s2_line = s2_file.readline()
+    s3_line = s3_file.readline()
+    d1_line = d1_file.readline()
+    d2_line = d2_file.readline()
+    d3_line = d3_file.readline()
     for id in range(nums):
-        s1_line = s1_file.readline()
         rst_s1 = process_line(s1_line)
-        while rst_s1 and rst_s1[1] != id:
+        while rst_s1 and rst_s1[1] < id:
             s1_line = s1_file.readline()
             rst_s1 = process_line(s1_line)
+        if rst_s1 and rst_s1[1] > id:
+            print("id:", str(id), "loss")
+            continue
         if not rst_s1:
-            print("id:",str(id),"loss")
             break
 
-        s2_line = s2_file.readline()
         rst_s2 = process_line(s2_line)
-        while rst_s2 and rst_s2[1] != id:
+        while rst_s2 and rst_s2[1] < id:
             s2_line = s2_file.readline()
             rst_s2 = process_line(s2_line)
-        if not rst_s2:
+        if rst_s2 and rst_s2[1] > id:
             print("id:", str(id), "loss")
+            continue
+        if not rst_s2:
             break
 
-        s3_line = s3_file.readline()
         rst_s3 = process_line(s3_line)
-        while rst_s3 and rst_s3[1] != id:
+        while rst_s3 and rst_s3[1] < id:
             s3_line = s3_file.readline()
             rst_s3 = process_line(s3_line)
-        if not rst_s3:
+        if rst_s3 and rst_s3[1] > id:
             print("id:", str(id), "loss")
+            continue
+        if not rst_s3:
             break
 
-        d1_line = d1_file.readline()
         rst_d1 = process_line(d1_line)
-        while rst_d1 and rst_d1[1] != id:
+        while rst_d1 and rst_d1[1] < id:
             d1_line = d1_file.readline()
             rst_d1 = process_line(d1_line)
-        if not rst_d1:
+        if rst_d1 and rst_d1[1] > id:
             print("id:", str(id), "loss")
+            continue
+        if not rst_d1:
             break
 
-        d2_line = d2_file.readline()
         rst_d2 = process_line(d2_line)
-        while rst_d2 and rst_d2[1] != id:
+        while rst_d2 and rst_d2[1] < id:
             d2_line = d2_file.readline()
             rst_d2 = process_line(d2_line)
-        if not rst_d2:
+        if rst_d2 and rst_d2[1] > id:
             print("id:", str(id), "loss")
+            continue
+        if not rst_d2:
             break
 
-        d3_line = d3_file.readline()
         rst_d3 = process_line(d3_line)
-        while rst_d3 and rst_d3[1] != id:
+        while rst_d3 and rst_d3[1] < id:
             d3_line = d3_file.readline()
             rst_d3 = process_line(d3_line)
-        if not rst_d3:
+        if rst_d3 and rst_d3[1] > id:
             print("id:", str(id), "loss")
+            continue
+        if not rst_d3:
             break
+
+
 
         p1_time = rst_d1[0] - rst_s1[0]
         p2_time = rst_d2[0] - rst_s2[0]
         p3_time = rst_d3[0] - rst_s3[0]
 
-        rst_file.write(str(p1_time)+" "+str(p2_time)+" "+str(p3_time)+"\n")
+        rst_file.write(str(id)+" "+str(p1_time)+" "+str(p2_time)+" "+str(p3_time)+"\n")
 
     s1_file.close()
     s2_file.close()
@@ -116,11 +130,74 @@ def process_line(line_str):
     else:
         return None
 
-s1_filepath = "data/send/packet_record2021-03-05 21-35-35.txt"
-s2_filepath = "data/send/packet_record2021-03-05 21-35-44.txt"
-s3_filepath = "data/send/packet_record2021-03-05 21-35-51.txt"
-d1_filepath = "data/receive/d1/packet_record2021-03-05 21-38-11.txt"
-d2_filepath = "data/receive/d2/packet_record2021-03-05 21-39-51.txt"
-d3_filepath = "data/receive/d3/packet_record2021-03-05 21-41-01.txt"
-nums = 50000
-preprocess(s1_filepath,s2_filepath,s3_filepath,d1_filepath,d2_filepath,d3_filepath,nums)
+def analyse_file():
+    """
+    分析路径时延数据，画图
+    :return:
+    """
+    # d1_filepath = "data/receive/d1/packet_record2021-03-07 14-44-05.txt"
+    # d2_filepath = "data/receive/d2/packet_record2021-03-07 14-47-17.txt"
+    # d3_filepath = "data/receive/d3/packet_record2021-03-07 14-46-44.txt"
+    # s1_filepath = "data/send/packet_record2021-03-07 14-47-44.txt"
+    # s2_filepath = "data/send/packet_record2021-03-07 14-48-07.txt"
+    # s3_filepath = "data/send/packet_record2021-03-07 14-48-21.txt"
+    d1_filepath = "data/receive/d1/packet_record2021-03-07 16-53-38.txt"
+    d2_filepath = "data/receive/d2/packet_record2021-03-07 16-54-34.txt"
+    d3_filepath = "data/receive/d3/packet_record2021-03-07 16-55-04.txt"
+    s1_filepath = "data/send/packet_record2021-03-07 16-55-20.txt"
+    s2_filepath = "data/send/packet_record2021-03-07 16-55-25.txt"
+    s3_filepath = "data/send/packet_record2021-03-07 16-55-33.txt"
+    nums = 100000
+    preprocess(s1_filepath,s2_filepath,s3_filepath,d1_filepath,d2_filepath,d3_filepath,nums)
+
+def d(interval = 100, sum_packet=10000):
+    """
+
+    :param interval: 每隔多少个包计算一个时延协方差
+    :param sum_packet: 总包数量
+    :return:
+    """
+    plt.figure()
+    rst_filepath = "data/rst_path_time2021-03-07 21-43-50.txt"
+    file = open(rst_filepath,"r")
+    p1_times = []
+    p2_times = []
+    p3_times = []
+    id = 0
+    i = 0
+    while id < sum_packet:
+        i += 1
+        id = i*interval
+        for _ in range(interval):
+            line = file.readline()
+            if line:
+                id_, p1_time,p2_time,p3_time = line.split(" ")
+                if int(id_) < id:
+                    p1_times.append(float(p1_time))
+                    p2_times.append(float(p2_time))
+                    p3_times.append(float(p3_time))
+
+        p12 = np.cov(p1_times,p2_times)[0,1]
+        p13 = np.cov(p1_times,p3_times)[0,1]
+        p23 = np.cov(p2_times,p3_times)[0,1]
+        print(p12,p13,p23)
+        p12 = np.log10(p12)
+        p13 = np.log10(p13)
+        p23 = np.log10(p23)
+        plt.scatter(i,p12,c="b")
+        plt.scatter(i,p13,c="r")
+        plt.scatter(i,p23,c="y")
+        p1_times = []
+        p2_times = []
+        p3_times = []
+    plt.show()
+    plt.close()
+
+
+
+
+
+
+if __name__ == '__main__':
+    # analyse_file()
+    d(10000,100000)
