@@ -9,7 +9,7 @@
 @contact : zongwang.zhang@outlook.com
 '''
 """
-对产生的测量数据文件分析，画图
+对产生的测量数据文件分析
 """
 import time as systime
 import numpy as np
@@ -130,68 +130,32 @@ def process_line(line_str):
     else:
         return None
 
-def analyse_file():
+def analyse_file(nums = 100000):
     """
     分析路径时延数据，画图
     :return:
     """
-    # d1_filepath = "data/receive/d1/packet_record2021-03-07 14-44-05.txt"
-    # d2_filepath = "data/receive/d2/packet_record2021-03-07 14-47-17.txt"
-    # d3_filepath = "data/receive/d3/packet_record2021-03-07 14-46-44.txt"
-    # s1_filepath = "data/send/packet_record2021-03-07 14-47-44.txt"
-    # s2_filepath = "data/send/packet_record2021-03-07 14-48-07.txt"
-    # s3_filepath = "data/send/packet_record2021-03-07 14-48-21.txt"
-    d1_filepath = "data/receive/d1/packet_record2021-03-07 16-53-38.txt"
-    d2_filepath = "data/receive/d2/packet_record2021-03-07 16-54-34.txt"
-    d3_filepath = "data/receive/d3/packet_record2021-03-07 16-55-04.txt"
-    s1_filepath = "data/send/packet_record2021-03-07 16-55-20.txt"
-    s2_filepath = "data/send/packet_record2021-03-07 16-55-25.txt"
-    s3_filepath = "data/send/packet_record2021-03-07 16-55-33.txt"
-    nums = 100000
+
+    # d1_filepath = "data/receive/d1/packet_record2021-03-07 16-53-38.txt"
+    # d2_filepath = "data/receive/d2/packet_record2021-03-07 16-54-34.txt"
+    # d3_filepath = "data/receive/d3/packet_record2021-03-07 16-55-04.txt"
+    # s1_filepath = "data/send/packet_record2021-03-07 16-55-20.txt"
+    # s2_filepath = "data/send/packet_record2021-03-07 16-55-25.txt"
+    # s3_filepath = "data/send/packet_record2021-03-07 16-55-33.txt"
+    # d1_filepath = "data/receive/d1/packet_record2021-03-15-10-38-11.txt"
+    # d2_filepath = "data/receive/d2/packet_record2021-03-15 10-39-07.txt"
+    # d3_filepath = "data/receive/d3/packet_record2021-03-15 10-40-03.txt"
+    # s1_filepath = "data/send/packet_record2021-03-15 10-44-12.txt"
+    # s2_filepath = "data/send/packet_record2021-03-15 10-44-27.txt"
+    # s3_filepath = "data/send/packet_record2021-03-15 10-44-53.txt"
+    d1_filepath = "data/receive/d1/packet_record2021-03-20 19-59-48.txt"
+    d2_filepath = "data/receive/d2/packet_record2021-03-20 20-00-18.txt"
+    d3_filepath = "data/receive/d3/packet_record2021-03-20 20-01-10.txt"
+    s1_filepath = "data/send/packet_record2021-03-20 20-01-48.txt"
+    s2_filepath = "data/send/packet_record2021-03-20 20-02-03.txt"
+    s3_filepath = "data/send/packet_record2021-03-20 20-02-15.txt"
     preprocess(s1_filepath,s2_filepath,s3_filepath,d1_filepath,d2_filepath,d3_filepath,nums)
 
-def d(interval = 100, sum_packet=10000):
-    """
-
-    :param interval: 每隔多少个包计算一个时延协方差
-    :param sum_packet: 总包数量
-    :return:
-    """
-    plt.figure()
-    rst_filepath = "data/rst_path_time2021-03-07 21-43-50.txt"
-    file = open(rst_filepath,"r")
-    p1_times = []
-    p2_times = []
-    p3_times = []
-    id = 0
-    i = 0
-    while id < sum_packet:
-        i += 1
-        id = i*interval
-        for _ in range(interval):
-            line = file.readline()
-            if line:
-                id_, p1_time,p2_time,p3_time = line.split(" ")
-                if int(id_) < id:
-                    p1_times.append(float(p1_time))
-                    p2_times.append(float(p2_time))
-                    p3_times.append(float(p3_time))
-
-        p12 = np.cov(p1_times,p2_times)[0,1]
-        p13 = np.cov(p1_times,p3_times)[0,1]
-        p23 = np.cov(p2_times,p3_times)[0,1]
-        print(p12,p13,p23)
-        p12 = np.log10(p12)
-        p13 = np.log10(p13)
-        p23 = np.log10(p23)
-        plt.scatter(i,p12,c="b")
-        plt.scatter(i,p13,c="r")
-        plt.scatter(i,p23,c="y")
-        p1_times = []
-        p2_times = []
-        p3_times = []
-    plt.show()
-    plt.close()
 
 
 
@@ -199,5 +163,6 @@ def d(interval = 100, sum_packet=10000):
 
 
 if __name__ == '__main__':
-    # analyse_file()
-    d(10000,100000)
+    # analyse_file(360000)
+    plot(24000,360000)
+    plot_with_interval(6000,sum_packet=360000)

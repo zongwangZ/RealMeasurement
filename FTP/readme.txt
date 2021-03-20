@@ -1,0 +1,1 @@
+该FTP程序目前只能在linux下使用，主要是os.fork，应该可以改成thread

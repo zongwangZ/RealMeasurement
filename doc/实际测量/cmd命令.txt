@@ -1,4 +1,27 @@
 conda activate machine_learning
 cd C:\Users\张宗旺\Documents\GitHub\RealMeasurement
-python sniff_source.py "Intel(R) Dual Band Wireless-AC 8265" "udp dst port 10002" 100000 2400
-python probing.py 100000
+python sniff_source.py "Intel(R) Dual Band Wireless-AC 8265" "udp dst port 10002" 360000 7200
+
+conda activate machine_learning
+cd C:\Users\张宗旺\Documents\GitHub\RealMeasurement
+python sniff_source.py "Intel(R) Dual Band Wireless-AC 8265" "udp dst port 10003" 360000 7200
+
+conda activate machine_learning
+cd C:\Users\张宗旺\Documents\GitHub\RealMeasurement
+python sniff_source.py "Intel(R) Dual Band Wireless-AC 8265" "udp dst port 10004" 360000 7200
+
+conda activate machine_learning
+cd C:\Users\张宗旺\Documents\GitHub\RealMeasurement
+python probing.py 360000
+
+conda activate machine_learning
+cd C:\Users\张宗旺\Documents\GitHub\RealMeasurement\tracert\
+python tracert.py 1.15.81.154 300 12
+
+conda activate machine_learning
+cd C:\Users\张宗旺\Documents\GitHub\RealMeasurement\tracert\
+python tracert.py 82.156.15.153 300 12
+
+conda activate machine_learning
+cd C:\Users\张宗旺\Documents\GitHub\RealMeasurement\tracert\
+python tracert.py 120.24.37.43 300 12
