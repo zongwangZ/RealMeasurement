@@ -164,5 +164,4 @@ def analyse_file(nums = 100000):
 
 if __name__ == '__main__':
     # analyse_file(360000)
-    plot(24000,360000)
-    plot_with_interval(6000,sum_packet=360000)
+    pass
